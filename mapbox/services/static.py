@@ -1,3 +1,4 @@
+from email.mime import image
 import json
 
 from uritemplate import URITemplate
@@ -42,7 +43,7 @@ class Static(Service):
                 "must be less than 4096 characters")
         return val
 
-    def image(self, mapid, lon=None, lat=None, z=None, features=None,
+    def uri(self, mapid, lon=None, lat=None, z=None, features=None,
               width=600, height=600, image_format='png256', sort_keys=False,
               retina=False):
 
@@ -91,6 +92,15 @@ class Static(Service):
         full_fmt = '{0}.{1}'.format(twox, image_format)
         uri += full_fmt
 
+        return uri 
+
+
+    def image(self, mapid, lon=None, lat=None, z=None, features=None,
+              width=600, height=600, image_format='png256', sort_keys=False,
+              retina=False):
+        uri = self.uri(mapid, lon=lon, lat=lat, z=z, features=features, 
+                       width=width, height=height, image_format=image_format, 
+                       sort_keys=sort_keys, retina=retina)
         res = self.session.get(uri)
         self.handle_http_error(res)
         return res
