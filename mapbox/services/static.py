@@ -104,3 +104,8 @@ class Static(Service):
         res = self.session.get(uri)
         self.handle_http_error(res)
         return res
+
+    def fetch_image(self, uri):
+        res = self.session.get(uri)
+        self.handle_http_error(res)
+        return res
